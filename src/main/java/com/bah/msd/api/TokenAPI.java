@@ -109,7 +109,7 @@ public class TokenAPI {
 	private Customer getCustomerByNameFromCustomerAPI(String username) {
 		try {
 
-			String apiHost= System.getenv("API_HOST");
+			String apiHost = System.getenv("API_HOST");
 			if(apiHost == null) {
 				apiHost = this.dataApiHost;
 			}
