@@ -36,9 +36,11 @@ node {
                 sh "kubectl create deployment mccauth --image=mccauth:v1.0"
                 
                 //get the value of API_HOST from kubernetes services and set the env variable
-                sh "mccdataIP=$(kubectl get service/mccdata -o jsonpath={.spec.clusterIP})"
-                
-                sh "kubectl set env deployment/mccauth API_HOST=$mccdataIP:8080"
+                //sh "mccdataIP=$(kubectl get service/mccdata -o jsonpath={.spec.clusterIP})"
+
+                //sh "kubectl set env deployment/mccauth API_HOST=$mccdataIP:8080"
+
+                sh "kubectl set env deployment/event-auth API_HOST=\$(kubectl get service/event-data -o jsonpath='{.spec.clusterIP}'):8080"
                 
                 sh "kubectl expose deployment mccauth --type=LoadBalancer --port=8081"
             }
