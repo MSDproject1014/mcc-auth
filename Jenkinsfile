@@ -31,16 +31,16 @@ node {
 	   parameters: [choice(choices: 'Yes\nNo', 
 	   description: '', name: 'Pass')]
 	
-	  if(response=="Yes") {
-	    stage('Deploy to Kubenetes cluster - AuthApi') {
-	      sh "kubectl create deployment mccauth --image=mccauth:v1.0"
-	      
-		  //get the value of API_HOST from kubernetes services and set the env variable
-	      sh "set env deployment/mccauth API_HOST=\$(kubectl get service/mccdata -o jsonpath='{.spec.clusterIP}'):8080"
-	      
-	      sh "kubectl expose deployment mccauth --type=LoadBalancer --port=8081"
+        if(response=="Yes") {
+            stage('Deploy to Kubenetes cluster - AuthApi') {
+                sh "kubectl create deployment mccauth --image=mccauth:v1.0"
+                
+                //get the value of API_HOST from kubernetes services and set the env variable
+                //sh "set env deployment/mccauth API_HOST=\$(kubectl get service/mccdata -o jsonpath='{.spec.clusterIP}'):8080"
+                
+                //sh "kubectl expose deployment mccauth --type=LoadBalancer --port=8081"
+            }
 	    }
-	  }
     }
 
     stage("Production Deployment View") {
